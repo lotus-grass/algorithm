@@ -58,7 +58,7 @@ int build(int pl, int pr, int d = 0)
 {
  if (pl > pr) return 0;
  int mid = (pl + pr) >> 1, rt = mid;
- nth_element(p + pl, p + mid, p + pr + 1, [d](int i, int j) { return p[i][d] < p[j][d]; });
+ nth_element(p + pl, p + mid, p + pr + 1, [d](pt i, pt j) { return i[d] < j[d]; });
  tr[rt].now = p[mid], tr[rt].t = a[mid];
  tr[rt].lc = build(pl, mid, (d + 1) % k);
  tr[rt].rc = build(mid + 1, pr, (d + 1) % k);
