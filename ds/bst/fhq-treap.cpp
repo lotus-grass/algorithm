@@ -5,12 +5,11 @@ const int N = 1e5 + 10;
 int n, rt, L, R, p, cnt;
 struct node
 {
- int ls, rs, val, pri, siz;
- node() {}
- node(int _l, int _r, int _v, int _p, int _s) { ls = _l, rs = _r, val = _v, pri = _p, siz = _s; }
+ int ls, rs, val, siz;
+ mt19937::result_type pri;
 } t[N];
 void pushup(int u) { t[u].siz = t[t[u].ls].siz + t[t[u].rs].siz + 1; }
-void newnode(int x) { t[++cnt] = node(0, 0, x, rng(), 1); }
+void newnode(int x) { t[++cnt] = {0, 0, x, 1, rng()}; }
 void split(int u, int x, int &L, int &R)
 {
  if (!u) return L = R = 0, void();

@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 const int N = 1e5 + 5;
 int rt, siz[N], ch[N][2], val[N], tot, fa[N], cnt[N];
 void pushup(int p) { siz[p] = siz[ch[p][0]] + siz[ch[p][1]] + cnt[p]; }
@@ -18,7 +20,6 @@ void splay(int p)
   if (fa[f]) rotate(get(p) == get(f) ? f : p);
  rt = p;
 }
-
 void nw(int k, int fath, int op) { val[++tot] = k, siz[tot] = cnt[tot] = 1, fa[tot] = fath, ch[fath][op] = tot; }
 void ins(int k)
 {
@@ -52,8 +53,7 @@ int rk(int k)
  while (true)
  {
   if (k < val[p]) p = ch[p][0];
-  else
-  {
+  else {
    res += siz[ch[p][0]];
    if (!p) return res + 1;
    if (val[p] == k) return splay(p), res + 1;
@@ -104,11 +104,11 @@ int kth(int k)
  while (1)
  {
   if (ch[p][0] && k <= siz[ch[p][0]]) p = ch[p][0];
-  else
-  {
+  else {
    k -= cnt[p] + siz[ch[p][0]];
    if (k <= 0) return splay(p), val[p];
    p = ch[p][1];
   }
  }
 }
+int main() { return 0; }

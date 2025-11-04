@@ -1,4 +1,8 @@
-void move(int pos, int sign) { ... }
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5;
+int n, m, ans[N], nowAns;
+void move(int pos, int sign) {}
 int unit;
 struct node
 {
@@ -12,7 +16,7 @@ void solve()
 {
  unit = int(ceil(pow(n, 0.5)));
  sort(querys, querys + m);
- for (int i = 0; i < m; ++i)
+ for (int i = 0, l = 1, r = 0; i < m; ++i)
  {
   const node &q = querys[i];
   while (l > q.l) move(--l, 1);
