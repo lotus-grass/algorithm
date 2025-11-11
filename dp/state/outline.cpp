@@ -16,27 +16,21 @@ int main()
   for (int j = 0; j < m; ++j)
    if (s[i][j] == '#') E[i] |= (1 << j);
  }
- auto check = [&](int S, int T, int x) -> bool
+ int cur = 1, pre = 0;
+ for (int S = 0; S < (1 << m); ++S)
+  if ((S & E[1]) == 0 && (S & (S << 1)) == 0) dp[cur][S] = 1;
+ for (int i = 2; i <= n; ++i)
  {
-  if (S & T) return false;
-  if (T & (T << 1)) return false;
-  if ((S << 1) & T) return false;
-  if ((S >> 1) & T) return false;
-  if (T & E[x]) return false;
-  return true;
- };
- int cur = 0, pre;
- dp[0][0] = 1;
- for (int i = 1; i <= n; ++i)
- {
-  pre = cur, cur ^= 1;
-  memset(dp[cur], 0, sizeof(dp[cur]));
+  swap(cur, pre), memset(dp[cur], 0, sizeof(dp[cur]));
+  for (int j = 0; j < m; ++j)
+   for (int S = 0; S < (1 << m); ++S)
+    if (S & (1 << j)) (dp[pre][S] += dp[pre][S ^ (1 << j)]) %= mod;
   for (int S = 0; S < (1 << m); ++S)
-  {
-   if (!dp[pre][S]) continue;
-   for (int T = 0; T < (1 << m); ++T)
-    if (check(S, T, i)) (dp[cur][T] += dp[pre][S]) %= mod;
-  }
+   if ((S & E[i]) == 0 && (S & (S << 1)) == 0)
+   {
+    int T = (S | (S << 1) | (S >> 1)) & ((1 << m) - 1);
+    dp[cur][S] = dp[pre][T ^ ((1 << m) - 1)];
+   }
  }
  size_t ans = 0;
  for (int S = 0; S < (1 << m); ++S) (ans += dp[cur][S]) %= mod;

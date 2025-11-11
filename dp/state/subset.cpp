@@ -25,16 +25,17 @@ int main()
   if (T & E[x]) return false;
   return true;
  };
- int cur = 0, pre;
+ int cur = 0, pre = 1;
  dp[0][0] = 1;
  for (int i = 1; i <= n; ++i)
  {
-  pre = cur, cur ^= 1;
-  memset(dp[cur], 0, sizeof(dp[cur]));
-  for (int S = 0; S < (1 << m); ++S)
+  swap(pre, cur), memset(dp[cur], 0, sizeof(dp[cur]));
+  for (int S = 0; S < (1 << m); ++S) dp[cur][0] += dp[pre][S];
+  for (int S = 0, Sn; S < (1 << m); ++S)
   {
    if (!dp[pre][S]) continue;
-   for (int T = 0; T < (1 << m); ++T)
+   Sn = ((1 << m) - 1) ^ S;
+   for (int T = Sn; T; T = (T - 1) & Sn)
     if (check(S, T, i)) (dp[cur][T] += dp[pre][S]) %= mod;
   }
  }
