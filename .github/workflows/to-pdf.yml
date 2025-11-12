@@ -1,0 +1,43 @@
+on:
+  workflow_dispatch:
+
+name: Make PDF through Typst
+jobs:
+  topdf:
+    name: Make PDF through Typst
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
+        ref: main
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+
+    - name: Set up Typst
+      run: |
+      sudo apt update
+      sudo apt install snapd
+      sudo snap install typst
+
+    - name: Make PDF
+      run: |
+      pip install requests
+      python work/maketypst.py
+      cd work/typst
+      typst compile all.typ all-pdf.pdf
+      cd ../..
+      
+    - name: Create Release and Upload Assets
+      uses: softprops/actions-gh-release@v1
+      with:
+        files: |
+          work/typst/all-pdf.pdf
+        body: PDF version
+        tag_name: PDF-Release
+        token: ${{ secrets.ACCESS_TOKEN }}
+      
