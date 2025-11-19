@@ -6,7 +6,7 @@ vector<int> g[N], vt[N];
 int fa[N], dep[N], siz[N], hson[N], dfn[N], top[N], idx;
 void hld1(int u, int fath) { ... }
 void hld2(int u, int fath) { ... }
-int lca(int u, int v) { ... } // 重链剖分相关内容见 oi-algorithms/graph/tree/hld.cpp
+int lca(int u, int v) { ... } // 重链剖分相关内容见 graph/tree/hld.cpp
 bool cmp(int a, int b) { return dfn[a] < dfn[b]; }
 inline void buildVtree()
 {
